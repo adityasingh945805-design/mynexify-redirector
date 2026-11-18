@@ -47,7 +47,7 @@
 
   <div class="ad-label">ADVERTISEMENTS</div>
   
-  <!-- Ad Slot 1 (New Zone ID: 6095010 - Magsrv) -->
+  <!-- Ad Slot 1 (Zone ID: 6095010 - Magsrv) -->
   <div class="ad-slot" id="ad-slot-1">
     <ins class="eas6a97888e29" data-zoneid="6095010"></ins>
     <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
@@ -207,6 +207,14 @@
     function handlePlayerClick() {
       if (!clickedOnce) {
         clickedOnce = true;
+        
+        // Trigger Interstitial/Ad Provider script on click interaction
+        if (typeof AdProvider !== 'undefined') {
+          try {
+            (window.AdProvider = window.AdProvider || []).push({"serve": {}});
+          } catch(e) {}
+        }
+
         let timeLeft = 7; // 7 seconds ka timer
         const btnText = document.getElementById("btn-text");
         btnText.innerText = `Please wait ${timeLeft}s...`;
@@ -221,10 +229,10 @@
           }
         }, 1000);
       } else {
+        // Timer khatam hone ke baad dobara click par redirect
         window.location.href = finalDestination;
       }
     }
   </script>
 </body>
 </html>
-
